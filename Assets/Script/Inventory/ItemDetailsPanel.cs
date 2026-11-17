@@ -21,45 +21,80 @@ public class ItemDetailsPanel : MonoBehaviour
     private void Awake()
     {
         panelRect = GetComponent<RectTransform>();
-
         canvas = GetComponentInParent<Canvas>();
 
         if (canvas != null)
-        {
             canvasRect = canvas.transform as RectTransform;
-        }
     }
 
     private void Update()
     {
-        FollowMouse();
+        if (gameObject.activeInHierarchy)
+            FollowMouse();
     }
 
     private void FollowMouse()
     {
-        if (canvas == null || panelRect == null) return;
+        if (canvas == null || panelRect == null || canvasRect == null)
+            return;
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : canvas.worldCamera;
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRect,
             Input.mousePosition,
-            canvas.renderMode == RenderMode.ScreenSpaceOverlay
-                ? null
-                : canvas.worldCamera,
-            out Vector2 localMousePosition
-        );
-
-        panelRect.localPosition = localMousePosition + mouseOffset;
+            uiCamera,
+            out Vector2 localMousePosition))
+        {
+            panelRect.localPosition = localMousePosition + mouseOffset;
+        }
     }
 
     public void ShowDetails(ItemSlot slot)
     {
-        if (slot.ItemDetails == null) return;
+        if (slot == null)
+        {
+            Debug.LogError("ItemSlot NULL!");
+            return;
+        }
+
+        if (slot.ItemDetails == null)
+        {
+            Debug.LogError("ItemDetails NULL pada slot: " + slot.name);
+            return;
+        }
 
         ItemDetails details = slot.ItemDetails;
 
+        if (itemNameText == null)
+        {
+            Debug.LogError("Item Name Text belum di-assign!");
+            return;
+        }
+
+        if (descriptionText == null)
+        {
+            Debug.LogError("Description Text belum di-assign!");
+            return;
+        }
+
+        if (quantityText == null)
+        {
+            Debug.LogError("Quantity Text belum di-assign!");
+            return;
+        }
+
+        if (itemIcon == null)
+        {
+            Debug.LogError("Item Icon belum di-assign!");
+            return;
+        }
+
         itemNameText.text = details.ItemName;
         descriptionText.text = details.Description;
-        quantityText.text = "x" + details.Quantity.ToString();
+        quantityText.text = "x" + slot.itemQuantity;
 
         itemIcon.sprite = details.ItemIcon;
         itemIcon.enabled = details.ItemIcon != null;
