@@ -65,13 +65,31 @@ public class ItemSlot : MonoBehaviour,
     public void AddQuantity(int amount)
     {
         itemQuantity += amount;
-
-        if (itemQuantity > maxStackSize)
-        {
-            itemQuantity = maxStackSize;
-        }
+        itemQuantity = Mathf.Clamp(itemQuantity, 0, maxStackSize);
 
         isFull = itemQuantity > 0;
+
+        UpdateUI();
+    }
+
+    // MENGURANGI ITEM KETIKA DILEMPAR
+    public void ConsumeOne()
+    {
+        if (itemQuantity <= 0) return;
+
+        itemQuantity--;
+
+        if (itemQuantity <= 0)
+        {
+            itemQuantity = 0;
+            itemName = "";
+            itemIcon = null;
+            itemDetails = null;
+
+            isFull = false;
+            isEquipped = false;
+            isItemSelected = false;
+        }
 
         UpdateUI();
     }

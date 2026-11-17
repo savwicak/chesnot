@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SelectedItemPanel : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class SelectedItemPanel : MonoBehaviour
 
     private ItemSlot selectedSlot;
 
+    // Akses slot yang sedang dipilih
+    public ItemSlot SelectedSlot => selectedSlot;
+
     private void Start()
     {
         equipButton.onClick.AddListener(EquipItem);
@@ -17,10 +21,14 @@ public class SelectedItemPanel : MonoBehaviour
 
     public void ShowSelectedItem(ItemSlot slot)
     {
+        if (slot == null) return;
+
         selectedSlot = slot;
 
         itemIcon.sprite = slot.itemIcon;
         itemIcon.enabled = slot.itemIcon != null;
+
+        equipButton.interactable = true;
 
         UpdateEquipButton();
 
@@ -49,7 +57,8 @@ public class SelectedItemPanel : MonoBehaviour
     {
         if (equipButton == null || selectedSlot == null) return;
 
-        var buttonText = equipButton.GetComponentInChildren<TMPro.TMP_Text>();
+        TMP_Text buttonText =
+            equipButton.GetComponentInChildren<TMP_Text>();
 
         if (buttonText != null)
         {
@@ -57,5 +66,24 @@ public class SelectedItemPanel : MonoBehaviour
                 ? "Unequip"
                 : "Equip";
         }
+    }
+
+    // Membersihkan panel ketika item habis
+    public void ClearSelectedItem()
+    {
+        selectedSlot = null;
+
+        if (itemIcon != null)
+        {
+            itemIcon.sprite = null;
+            itemIcon.enabled = false;
+        }
+
+        if (equipButton != null)
+        {
+            equipButton.interactable = false;
+        }
+
+        gameObject.SetActive(false);
     }
 }

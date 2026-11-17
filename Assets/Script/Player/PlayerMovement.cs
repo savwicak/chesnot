@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float knockbackForce = 4f;
     public float stunDuration = 0.5f;
     public float attackCooldown = 0.5f;
+    [SerializeField] private HealthBar healthBar;
 
     private string animasiSekarang = "";
 
@@ -133,6 +134,17 @@ public class PlayerMovement : MonoBehaviour
     {
         isStunned = true;
         canAttack = false;
+
+        Debug.Log("HIT COROUTINE DIPANGGIL!");
+
+        if (healthBar != null)
+        {
+            healthBar.TakeDamage(20);
+        }
+        else
+        {
+            Debug.LogError("HealthBar BELUM DI-ASSIGN!");
+        }
 
         PlayAnimation("play_Shock");
 
