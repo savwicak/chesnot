@@ -7,17 +7,11 @@ public class SelectedItemPanel : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private Image itemIcon;
-    [SerializeField] private Button equipButton;
 
     private ItemSlot selectedSlot;
 
-    // Akses slot yang sedang dipilih
     public ItemSlot SelectedSlot => selectedSlot;
 
-    private void Start()
-    {
-        equipButton.onClick.AddListener(EquipItem);
-    }
 
     public void ShowSelectedItem(ItemSlot slot)
     {
@@ -25,12 +19,11 @@ public class SelectedItemPanel : MonoBehaviour
 
         selectedSlot = slot;
 
-        itemIcon.sprite = slot.itemIcon;
-        itemIcon.enabled = slot.itemIcon != null;
-
-        equipButton.interactable = true;
-
-        UpdateEquipButton();
+        if (itemIcon != null)
+        {
+            itemIcon.sprite = slot.itemIcon;
+            itemIcon.enabled = slot.itemIcon != null;
+        }
 
         gameObject.SetActive(true);
     }
@@ -49,26 +42,9 @@ public class SelectedItemPanel : MonoBehaviour
             selectedSlot.SetEquipped(true);
             Debug.Log("Equipped: " + selectedSlot.itemName);
         }
-
-        UpdateEquipButton();
     }
 
-    private void UpdateEquipButton()
-    {
-        if (equipButton == null || selectedSlot == null) return;
 
-        TMP_Text buttonText =
-            equipButton.GetComponentInChildren<TMP_Text>();
-
-        if (buttonText != null)
-        {
-            buttonText.text = selectedSlot.isEquipped
-                ? "Unequip"
-                : "Equip";
-        }
-    }
-
-    // Membersihkan panel ketika item habis
     public void ClearSelectedItem()
     {
         selectedSlot = null;
@@ -77,11 +53,6 @@ public class SelectedItemPanel : MonoBehaviour
         {
             itemIcon.sprite = null;
             itemIcon.enabled = false;
-        }
-
-        if (equipButton != null)
-        {
-            equipButton.interactable = false;
         }
 
         gameObject.SetActive(false);

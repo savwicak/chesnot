@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 2912874038172791125}
   - component: {fileID: 2524935599310453697}
   - component: {fileID: 711287711753022864}
+  - component: {fileID: 8191482216911603141}
+  - component: {fileID: 3992049946575574708}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -132,6 +134,7 @@ MonoBehaviour:
   knockbackForce: 5
   stunDuration: 0.3
   attackCooldown: 0.5
+  healthBar: {fileID: 0}
 --- !u!50 &2912874038172791125
 Rigidbody2D:
   serializedVersion: 5
@@ -225,3 +228,59 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!58 &8191482216911603141
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502812195753795840}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.09559774, y: 0}
+  m_Radius: 7
+--- !u!114 &3992049946575574708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502812195753795840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36c7b1e9c69627429d4f80bb9f54aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedItemPanel: {fileID: 0}
+  player: {fileID: 7183900058301474326}
+  mainCamera: {fileID: 0}
+  aimLine: {fileID: 0}
+  chestnutPrefab: {fileID: 7143528096483366003, guid: 442e3da8e59de6d4f9d8b4bea6c7f5fc, type: 3}
+  throwForce: 10
+  spawnDistance: 0.5
+  lineLength: 2

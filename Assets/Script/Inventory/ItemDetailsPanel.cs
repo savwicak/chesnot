@@ -9,6 +9,7 @@ public class ItemDetailsPanel : MonoBehaviour
     [SerializeField] private TMP_Text itemNameText;
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private TMP_Text quantityText;
+    [SerializeField] private TMP_Text otherQuantityText;
     [SerializeField] private Image itemIcon;
 
     [Header("Mouse Settings")]
@@ -95,6 +96,8 @@ public class ItemDetailsPanel : MonoBehaviour
         itemNameText.text = details.ItemName;
         descriptionText.text = details.Description;
         quantityText.text = "x" + slot.itemQuantity;
+        otherQuantityText.text = "x" + slot.itemQuantity;
+
 
         itemIcon.sprite = details.ItemIcon;
         itemIcon.enabled = details.ItemIcon != null;

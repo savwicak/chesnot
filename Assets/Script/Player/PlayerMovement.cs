@@ -108,14 +108,14 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Coin"))
-        {
-            Destroy(other.gameObject);
-            skor++;
+        //if (other.CompareTag("Coin"))
+        //{
+        //    Destroy(other.gameObject);
+        //    skor++;
 
-            FindFirstObjectByType<GameManager>().AmbilKoin();
-            Debug.Log("Score : " + skor);
-        }
+        //    FindFirstObjectByType<GameManager>().AmbilKoin();
+        //    Debug.Log("Score : " + skor);
+        //}
 
         if (other.CompareTag("Enemy") && !isStunned)
         {

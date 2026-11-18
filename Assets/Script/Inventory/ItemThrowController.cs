@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,17 +17,20 @@ public class ItemThrowController : MonoBehaviour
     [SerializeField] private float lineLength = 2f;
 
     private bool isAiming;
-    private Vector2 aimDirection;
+    private Vector2 aimDirection = Vector2.down;
 
     public bool IsAiming => isAiming;
 
     private void Start()
     {
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+
         if (aimLine != null)
         {
             aimLine.positionCount = 2;
-            aimLine.enabled = false;
             aimLine.useWorldSpace = true;
+            aimLine.enabled = false;
         }
     }
 
@@ -40,27 +44,25 @@ public class ItemThrowController : MonoBehaviour
             StartAiming();
         }
 
-        if (!isAiming) return;
-
-        UpdateAiming();
-
-        if (Keyboard.current.qKey.wasReleasedThisFrame)
+        if (isAiming)
         {
-            ThrowChestnut();
+            UpdateAiming();
+
+            if (Keyboard.current.qKey.wasReleasedThisFrame)
+            {
+                ThrowChestnut();
+            }
         }
     }
 
     private void StartAiming()
     {
-        if (selectedItemPanel == null || player == null)
+        if (selectedItemPanel == null || player == null || mainCamera == null)
             return;
 
         ItemSlot slot = selectedItemPanel.SelectedSlot;
 
-        if (slot == null || !slot.isFull)
-            return;
-
-        if (slot.itemName != "Chestnut")
+        if (slot == null || !slot.isFull || slot.itemName != "Chestnut")
             return;
 
         if (chestnutPrefab == null)
@@ -70,30 +72,30 @@ public class ItemThrowController : MonoBehaviour
         }
 
         isAiming = true;
-        aimDirection = Vector2.down;
 
-        if (aimLine != null)
-            aimLine.enabled = true;
+        aimLine.enabled = aimLine != null;
 
         UpdateAiming();
+
+        Debug.Log("Started Aiming!");
     }
 
     private void UpdateAiming()
     {
+        if (mainCamera == null || player == null)
+            return;
+
         Vector2 mousePosition = Mouse.current.position.ReadValue();
 
         Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(
-            new Vector3(
-                mousePosition.x,
-                mousePosition.y,
-                -mainCamera.transform.position.z
-            )
+            new Vector3(mousePosition.x, mousePosition.y,
+            Mathf.Abs(mainCamera.transform.position.z))
         );
 
-        Vector2 direction = (mouseWorld - player.position).normalized;
+        Vector2 direction = (Vector2)(mouseWorld - player.position);
 
         if (direction.sqrMagnitude > 0.001f)
-            aimDirection = direction;
+            aimDirection = direction.normalized;
 
         if (aimLine != null)
         {
@@ -137,21 +139,16 @@ public class ItemThrowController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Chestnut Prefab membutuhkan Rigidbody2D!");
+            Debug.LogWarning("Chestnut membutuhkan Rigidbody2D!");
         }
 
         slot.ConsumeOne();
 
         if (slot.itemQuantity <= 0)
-        {
             selectedItemPanel.ClearSelectedItem();
-        }
         else
-        {
             selectedItemPanel.ShowSelectedItem(slot);
-        }
 
         Debug.Log("Chestnut Thrown!");
     }
 }
-
