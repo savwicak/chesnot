@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 183593392}
   - component: {fileID: 183593391}
   - component: {fileID: 183593390}
-  - component: {fileID: 183593393}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -223,24 +222,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183593388}
   m_CullTransparentMesh: 1
---- !u!114 &183593393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183593388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9baf100ac6642e84196e9275efc66eab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemNameText: {fileID: 1605792795}
-  descriptionText: {fileID: 1347086661}
-  quantityText: {fileID: 1878704990}
-  otherQuantityText: {fileID: 997941943}
-  itemIcon: {fileID: 1634795693}
-  mouseOffset: {x: 300, y: -340}
 --- !u!1001 &217828115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1149,7 +1130,7 @@ MonoBehaviour:
   InventoryCanvas: {fileID: 1064672169}
   slotCount: 16
   itemSlot: []
-  hoverDetailsPanel: {fileID: 183593393}
+  hoverDetailsPanel: {fileID: 0}
   selectedItemPanel: {fileID: 838899551}
 --- !u!1 &619736233
 GameObject:
@@ -3367,6 +3348,7 @@ GameObject:
   - component: {fileID: 1659650117}
   - component: {fileID: 1659650116}
   - component: {fileID: 1659650118}
+  - component: {fileID: 1659650119}
   m_Layer: 5
   m_Name: ItemDescription
   m_TagString: Untagged
@@ -3459,6 +3441,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1659650119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659650113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9baf100ac6642e84196e9275efc66eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemNameText: {fileID: 1605792795}
+  descriptionText: {fileID: 1347086661}
+  quantityText: {fileID: 1878704990}
+  otherQuantityText: {fileID: 997941943}
+  itemIcon: {fileID: 1634795693}
+  mouseOffset: {x: 300, y: -340}
 --- !u!1001 &1661242533
 PrefabInstance:
   m_ObjectHideFlags: 0

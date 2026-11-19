@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5174828715981796011}
   - component: {fileID: 6959296807278191257}
   - component: {fileID: 5096886826009453894}
+  - component: {fileID: 6572447343804744327}
   - component: {fileID: -1911026479008703766}
   m_Layer: 0
   m_Name: Jay
@@ -111,6 +112,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6572447343804744327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795688874869317238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2180885e669a8479e79d26aae9c992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  ms: 2
+  jarakDeteksi: 10
+  jarakSerang: 1.2
+  jedaSerang: 1
+  onZombieDeadVisual:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!70 &-1911026479008703766
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

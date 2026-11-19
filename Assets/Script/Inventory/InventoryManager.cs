@@ -19,7 +19,6 @@ public class InventoryManager : MonoBehaviour, GrabableItem
     [SerializeField] private ItemDetailsPanel hoverDetailsPanel;
     [SerializeField] private SelectedItemPanel selectedItemPanel;
 
-
     void Start()
     {
         CreateSlots();
@@ -29,38 +28,44 @@ public class InventoryManager : MonoBehaviour, GrabableItem
         inventoryAction = InputSystem.actions.FindAction("Inventory");
 
         InventoryActive = false;
+        Time.timeScale = 1f;
 
-        // Hide detail panels initially
         if (hoverDetailsPanel != null)
-        {
             hoverDetailsPanel.gameObject.SetActive(false);
-        }
 
         if (selectedItemPanel != null)
-        {
             selectedItemPanel.gameObject.SetActive(false);
-        }
     }
-
 
     void Update()
     {
-        if (inventoryAction.triggered && InventoryCanvas != null)
+        if (inventoryAction == null || InventoryCanvas == null)
+            return;
+
+        if (!inventoryAction.triggered)
+            return;
+
+        InventoryActive = !InventoryActive;
+
+        InventoryCanvas.SetActive(InventoryActive);
+
+        Time.timeScale = InventoryActive ? 0f : 1f;
+
+        // Hide hover and selected panel when opening inventory
+        if (InventoryActive)
         {
-            InventoryActive = !InventoryActive;
+            if (hoverDetailsPanel != null)
+                hoverDetailsPanel.gameObject.SetActive(false);
 
-            InventoryCanvas.SetActive(InventoryActive);
-
-            Time.timeScale = InventoryActive ? 0f : 1f;
-
-            Debug.Log(InventoryActive
-                ? "Inventory is active"
-                : "Inventory is deactivated");
+            if (selectedItemPanel != null)
+                selectedItemPanel.gameObject.SetActive(false);
         }
+
+        Debug.Log(InventoryActive
+            ? "Inventory is active"
+            : "Inventory is deactivated");
     }
 
-
-    // CREATE INVENTORY SLOTS
     private void CreateSlots()
     {
         ItemSlot slotPrefab = Resources.Load<ItemSlot>("ItemSlot");
@@ -77,25 +82,20 @@ public class InventoryManager : MonoBehaviour, GrabableItem
         GridLayoutGroup grid = InventoryCanvas.GetComponentInChildren<GridLayoutGroup>(true);
 
         if (grid != null)
-        {
             parent = grid.transform;
-        }
 
         itemSlot = new ItemSlot[slotCount];
 
         for (int i = 0; i < itemSlot.Length; i++)
         {
-            // Create slot
             itemSlot[i] = Instantiate(slotPrefab, parent);
 
-            // Connect hover and selected panels
             itemSlot[i].SetupPanels(
                 hoverDetailsPanel,
                 selectedItemPanel
             );
         }
     }
-
 
     public void AddItem(ItemDetails item)
     {
@@ -108,7 +108,6 @@ public class InventoryManager : MonoBehaviour, GrabableItem
             return;
         }
 
-        // Stack same items
         for (int i = 0; i < itemSlot.Length; i++)
         {
             if (itemSlot[i].CanStackWith(item.ItemName))
@@ -130,7 +129,6 @@ public class InventoryManager : MonoBehaviour, GrabableItem
         Debug.LogWarning("Inventory is full, '" + item.ItemName + "' was lost.");
     }
 
-
     public void DeselectAllSlot()
     {
         foreach (ItemSlot slot in itemSlot)
@@ -140,9 +138,7 @@ public class InventoryManager : MonoBehaviour, GrabableItem
             slot.isItemSelected = false;
 
             if (slot.SelectedPanel != null)
-            {
                 slot.SelectedPanel.SetActive(false);
-            }
         }
     }
 }

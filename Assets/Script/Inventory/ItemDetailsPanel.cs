@@ -19,6 +19,8 @@ public class ItemDetailsPanel : MonoBehaviour
     private RectTransform canvasRect;
     private Canvas canvas;
 
+    private bool allowHover = true;
+
     private void Awake()
     {
         panelRect = GetComponent<RectTransform>();
@@ -26,11 +28,13 @@ public class ItemDetailsPanel : MonoBehaviour
 
         if (canvas != null)
             canvasRect = canvas.transform as RectTransform;
+
+        gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (gameObject.activeInHierarchy)
+        if (gameObject.activeInHierarchy && allowHover)
             FollowMouse();
     }
 
@@ -53,8 +57,19 @@ public class ItemDetailsPanel : MonoBehaviour
         }
     }
 
+    public void SetHoverEnabled(bool enabled)
+    {
+        allowHover = enabled;
+
+        if (!enabled)
+            HideDetails();
+    }
+
     public void ShowDetails(ItemSlot slot)
     {
+        if (!allowHover)
+            return;
+
         if (slot == null)
         {
             Debug.LogError("ItemSlot NULL!");
@@ -69,35 +84,19 @@ public class ItemDetailsPanel : MonoBehaviour
 
         ItemDetails details = slot.ItemDetails;
 
-        if (itemNameText == null)
+        if (itemNameText == null || descriptionText == null ||
+            quantityText == null || itemIcon == null)
         {
-            Debug.LogError("Item Name Text belum di-assign!");
-            return;
-        }
-
-        if (descriptionText == null)
-        {
-            Debug.LogError("Description Text belum di-assign!");
-            return;
-        }
-
-        if (quantityText == null)
-        {
-            Debug.LogError("Quantity Text belum di-assign!");
-            return;
-        }
-
-        if (itemIcon == null)
-        {
-            Debug.LogError("Item Icon belum di-assign!");
+            Debug.LogError("ItemDetailsPanel UI references belum lengkap!");
             return;
         }
 
         itemNameText.text = details.ItemName;
         descriptionText.text = details.Description;
         quantityText.text = "x" + slot.itemQuantity;
-        otherQuantityText.text = "x" + slot.itemQuantity;
 
+        if (otherQuantityText != null)
+            otherQuantityText.text = "x" + slot.itemQuantity;
 
         itemIcon.sprite = details.ItemIcon;
         itemIcon.enabled = details.ItemIcon != null;
