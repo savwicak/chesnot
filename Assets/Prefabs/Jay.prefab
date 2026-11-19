@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5174828715981796011}
   - component: {fileID: 6959296807278191257}
   - component: {fileID: 5096886826009453894}
-  - component: {fileID: 6572447343804744327}
+  - component: {fileID: 7024173637059781635}
   - component: {fileID: -1911026479008703766}
+  - component: {fileID: 2058250585731902376}
   m_Layer: 0
   m_Name: Jay
   m_TagString: Enemy
@@ -112,7 +113,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6572447343804744327
+--- !u!114 &7024173637059781635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,15 +122,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 795688874869317238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c2180885e669a8479e79d26aae9c992, type: 3}
+  m_Script: {fileID: 11500000, guid: 43534056f3e1e9541884fee9cfc4535a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  ms: 2
-  jarakDeteksi: 10
-  jarakSerang: 1.2
-  jedaSerang: 1
-  onZombieDeadVisual:
+  flySpeed: 4
+  jarakDeteksi: 3
+  jarakKabur: 8
+  jayCollider: {fileID: -1911026479008703766}
+  jayAnimator: {fileID: 5096886826009453894}
+  idleAnimation: idle
+  flyAnimation: fly
+  onJayDeadVisual:
     m_PersistentCalls:
       m_Calls: []
 --- !u!70 &-1911026479008703766
@@ -169,3 +173,30 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 11.3420925, y: 15.29}
   m_Direction: 0
+--- !u!50 &2058250585731902376
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795688874869317238}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
